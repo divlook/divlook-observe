@@ -47,62 +47,96 @@ const observe = Observe(data, {
 
 describe('divlook-observe', () => {
   describe('data 출력', () => {
-    it('object', () => {
+    it('observe.data == data', () => {
       assert.ok(observe.data, data)
     })
   })
-  describe('Set 사용법 (함수형태)', () => {
-    it(`안녕하세요. 차 의현입니다.`, () => {
-      observe.set(data => ({
-        name: `${data.name.slice(0, 1)} ${data.name.slice(1,3)}`
-      }))
-      assert.equal(result1, `안녕하세요. 차 의현입니다.`)
+  describe('Getter/Setter', () => {
+    describe('Getter', () => {
+      it(`observe.data.name == '차의현'`, () => {
+        assert.equal(observe.data.name, '차의현')
+      })
+      it('observe.data.object.a == 1', () => {
+        assert.equal(observe.data.object.a, 1)
+      })
+    })
+    describe('Setter', () => {
+      it(`observe.data.name = '임나연'`)
+      it('안녕하세요. 임나연입니다.', () => {
+        observe.data.name = '임나연'
+        assert.equal(result1, '안녕하세요. 임나연입니다.')
+      })
+      it('observe.data.object.a = 5')
+      it('old: 1, new: 5', () => {
+        observe.data.object.a = 5
+        assert.equal(result2, 'old: 1, new: 5')
+      })
     })
   })
-  describe('Set 사용법 (객체형태)', () => {
-    it(`안녕하세요. 이름입니다.`, () => {
-      observe.set({
-        name: '이름'
+  describe('observe.set(object | (data) => void)', () => {
+    describe('함수형태', () => {
+      it('observe.set(data => ({ name: `${data.name.slice(0, 1)} ${data.name.slice(1, 3)}` }))')
+      it(`안녕하세요. 임 나연입니다.`, () => {
+        observe.set(data => ({
+          name: `${data.name.slice(0, 1)} ${data.name.slice(1,3)}`
+        }))
+        assert.equal(result1, `안녕하세요. 임 나연입니다.`)
       })
-      assert.equal(result1, `안녕하세요. 이름입니다.`)
     })
-  })
-  describe('주의사항 : 상위 객체에서 하위 객체를 지우면 에러가 발생한다.', () => {
-    it(`old: 1, new: a`, () => {
-      observe.set({
-        object: {
-          a: 'a',
-          b: 1,
-          c: {
-            a: 1
-          }
-        }
+    describe('객체 형태', () => {
+      it('observe.set({ name: `이름` })')
+      it(`안녕하세요. 이름입니다.`, () => {
+        observe.set({
+          name: '이름'
+        })
+        assert.equal(result1, `안녕하세요. 이름입니다.`)
       })
-      assert.equal(result2, `old: 1, new: a`)
     })
-    it(`object.b는 watch에 등록되지 않아 출력되지 않는다.`, () => {
-      observe.set({
-        object: {
-          a: 1,
-          b: 'b',
-          c: {
-            a: 1
+    describe('다중 object', () => {
+      it(`observe.set({ object: { a: 'a', b: 1, c: { a: 1 } } })`)
+      it(`old: 5, new: a`, () => {
+        observe.set({
+          object: {
+            a: 'a',
+            b: 1,
+            c: {
+              a: 1
+            }
           }
-        }
+        })
+        assert.equal(result2, `old: 5, new: a`)
       })
-      assert.isUndefined(undefined)
-    })
-    it('c.a', () => {
-      observe.set({
-        object: {
-          a: 1,
-          b: 1,
-          c: {
-            a: 'c.a'
+      it(`observe.set({ object: { a: 1, b: 'b', c: { a: 1 } } })`)
+      it(`object.b는 watch에 등록되지 않아 출력되지 않는다.`, () => {
+        observe.set({
+          object: {
+            a: 1,
+            b: 'b',
+            c: {
+              a: 1
+            }
           }
-        }
+        })
+        assert.isUndefined(undefined)
       })
-      assert.equal(result3, 'c.a')
+      it(`observe.set({ object: { a: 1, b: 1, c: { a: 'c.a' } } })`)
+      it('c.a', () => {
+        observe.set({
+          object: {
+            a: 1,
+            b: 1,
+            c: {
+              a: 'c.a'
+            }
+          }
+        })
+        assert.equal(result3, 'c.a')
+      })
+      describe('주의사항', () => {
+        it('다중 object일 때는 observer.set보다 setter를 사용하는게 좋다.')
+        it('아래의 경우 object.a와 object.b를 삭제하게 되어 에러가 발생한다.')
+        it('observer.set({ object: { c: { a: 2} } })')
+      })
     })
   })
 })
