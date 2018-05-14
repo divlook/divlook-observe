@@ -9,7 +9,7 @@ const Observe = (data = {}, {
 } = defaultOtions) => {
 
   /**
-   * 관찰
+   * getter/setter 등록
    * @param {{}} origin 원본 객체
    * @param {{}} result 등록할 객체
    * @param {string[]} keyname key 배열
