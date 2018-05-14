@@ -65,3 +65,9 @@ observe.set({
     }
   }
 })
+
+/**
+ * Getter/Setter 테스트
+ */
+observe.data.name = '임나연'
+observe.data.object.a = 5
