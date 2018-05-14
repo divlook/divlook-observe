@@ -99,6 +99,4 @@ const Observe = (data = {}, {
   return observe
 }
 
-module.exports = {
-  Observe
-}
+export default Observe

@@ -1,16 +1,10 @@
 'use stric'
 
-const {
+import log from './console'
+import Observe from './divlook-observe'
+import {
   assert
-} = require('chai')
-
-const {
-  log
-} = require('./console')
-
-const {
-  Observe
-} = require('./divlook-observe')
+} from 'chai'
 
 const data = {
   name: '차의현',

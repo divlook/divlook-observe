@@ -1,11 +1,7 @@
 'use stric'
 
-const {
-  log
-} = require('./lib/console')
-const {
-  Observe
-} = require('./lib/divlook-observe')
+import log from "./console";
+import Observe from "./divlook-observe";
 
 const data = {
   name: '차의현',
