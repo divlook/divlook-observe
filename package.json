@@ -1,16 +1,19 @@
 {
   "name": "divlook-observe",
   "version": "1.0.0",
-  "description": "",
+  "engines": { "node": ">= 8.0.0" },
+  "description": "Observe objects in JavaScript",
+  "main": "lib/divlook-observe",
   "scripts": {
     "build": "babel --ignore spec.js,test.js src -d lib",
     "prestart": "npm run build",
     "start": "node lib/index.js",
     "test": "mocha --require babel-polyfill --compilers js:babel-register src/**/*.spec.js"
   },
-  "keywords": [],
+  "keywords": ["observe", "reactive"],
   "author": "chauihyeon",
-  "license": "ISC",
+  "homepage": "https://github.com/divlook/divlook-observe",
+  "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-polyfill": "^6.26.0",
