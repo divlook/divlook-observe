@@ -1,7 +1,7 @@
 'use stric'
 
-import log from "./console";
-import Observe from "./divlook-observe";
+import log from "./console"
+import Observe from "./divlook-observe"
 
 const data = {
   name: '차의현',
